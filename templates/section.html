@@ -1,0 +1,20 @@
+{% extends 'common.html' %}
+{% block head %}
+    <title>{{ section.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/section-styles.css' %}">
+{% endblock head %}
+
+{% block content %}
+    {% include 'header.html' %}
+    <div class="main">
+        <h4>{{ section.title }}</h4>
+        <div class="list-group">
+            {% for topic in topics %}
+                <a href="{% url 'topic' topic.id %}" class="list-group-item list-group-item-action">
+                    {{ topic.title }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

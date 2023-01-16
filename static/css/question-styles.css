@@ -1,0 +1,50 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.head {
+    display: flex;
+    max-width: 500px;
+    min-width: 400px;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+img {
+    max-width: 380px;
+}
+
+form {
+    max-width: 500px;
+}
+
+.question {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+span {
+    margin-left: 15px;
+}
+
+form {
+    margin-bottom: 10px;
+}
+
+button {
+    margin-top: 10px;
+    width: 100%;
+}

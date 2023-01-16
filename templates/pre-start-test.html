@@ -1,0 +1,14 @@
+{% extends 'common.html' %}
+{% block head %}
+    <title>Начать тест</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/pre-start-styles.css' %}">
+{% endblock head %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" value="{{ id }}" name="test_id">
+        <button type="submit" class="btn btn-warning">Начать тест</button>
+    </form>
+{% endblock content %}

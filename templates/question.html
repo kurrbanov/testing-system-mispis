@@ -1,0 +1,111 @@
+{% extends 'common.html' %}
+{% block head %}
+    <title>Тест</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/question-styles.css' %}">
+{% endblock head %}
+
+{% block content %}
+    <div class="question">
+    <div class="head">
+        <h4>{{ question.title }}</h4>
+        {% if question.level == "EASY" %}
+            <span class="level badge bg-success">{{ question.level }}</span>
+        {% elif question.level == "MEDIUM" %}
+            <span class="level badge bg-warning">{{ question.level }}</span>
+        {% else %}
+            <span class="level badge bg-danger">{{ question.level }}</span>
+        {% endif %}
+    </div>
+    <div class="info">
+        <div class="media">
+            {% if question.image %}
+                <img src="{{ question.image.url }}" alt="">
+            {% endif %}
+            <p>Осталось времени: <b id="time">00:{{ question.time }}</b></p>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{ question.id }}" name="question_id">
+            {% if question.type == "TEXT" %}
+                <label for="id_answer" class="form-label">Ваш ответ:</label>
+                <input type="text" name="answer" id="id_answer" class="form-control">
+            {% else %}
+                <div class="variants" id="variants">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="variant_1" id="var1">
+                      <label class="form-check-label" for="var1" id="lvar1">{{ question.option_question.variant_1 }}</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="variant_2" id="var2">
+                      <label class="form-check-label" for="var2" id="lvar2">{{ question.option_question.variant_2 }}</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="variant_3" id="var3">
+                      <label class="form-check-label" for="var3" id="lvar3">{{ question.option_question.variant_3 }}</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="variant_4" id="var4">
+                      <label class="form-check-label" for="var4" id="lvar4">{{ question.option_question.variant_4 }}</label>
+                    </div>
+                </div>
+            {% endif %}
+            {% if question.level == "HARD" %}
+                <input type="hidden" value="submit_test" name="submit_test">
+                <button type="submit" class="btn btn-danger">Отправить и завершить</button>
+            {% else %}
+                <button type="submit" class="btn btn-primary" id="get_answer">Ответить</button>
+            {% endif %}
+        </form>
+    </div>
+    </div>
+    <script>
+        let time_block = document.getElementById("time"),
+            time_value,
+            question_time = parseInt({{ question.time }}),
+            get_answer = document.getElementById("get_answer");
+        let interval = window.setInterval(function () {
+            if (question_time < 60) {
+                time_value = "00:"
+                if (question_time < 10) {
+                    time_value += "0" + question_time.toString();
+                } else {
+                    time_value += question_time.toString();
+                }
+            } else {
+                let minutes = Math.floor(question_time / 60);
+                let seconds = question_time - minutes * 60;
+                if (minutes < 10) {
+                    time_value = "0" + minutes.toString() + ":"
+                } else {
+                    time_value = minutes.toString() + ":"
+                }
+
+                if (seconds < 10) {
+                    time_value += "0" + seconds.toString();
+                } else {
+                    time_value += seconds.toString();
+                }
+            }
+            time_block.innerHTML = time_value;
+            question_time--;
+            console.log(question_time);
+            if (question_time < 0) {
+                let question_type = `{{ question.type }}`;
+                if (question_type === "TEXT") {
+                    let input = document.getElementById("id_answer");
+                    input.setAttribute("disabled", "");
+                } else {
+                    document.getElementById("var1").disabled = true;
+                    document.getElementById("var2").disabled = true;
+                    document.getElementById("var3").disabled = true;
+                    document.getElementById("var4").disabled = true;
+                }
+                get_answer.innerHTML = "Следующий вопрос"
+                get_answer.setAttribute("class", "btn btn-warning")
+                clearInterval(interval);
+            }
+        }, 1000)
+
+    </script>
+{% endblock content %}

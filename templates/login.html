@@ -1,0 +1,29 @@
+{% extends "common.html" %}
+{% block head %}
+    <title>Вход</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/auth-forms-styles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <body>
+        <form method="POST">
+        {% csrf_token %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <label for="id_id" class="form-label">№ Зачётной книжки</label>
+            <input type="text" name="id" id="id_id" class="form-control" placeholder="1234567" maxlength="7">
+
+            <label for="id_password" class="form-label">Пароль</label>
+            <input type="password" name="password" id="id_password" class="form-control" placeholder="Пароль">
+
+            <p>Ещё нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+            <button type="submit" class="btn btn-outline-success">Войти</button>
+        </form>
+    </body>
+{% endblock content %}

@@ -1,0 +1,43 @@
+{% extends 'common.html' %}
+{% block head %}
+    <title>{{ topic.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/section-styles.css' %}">
+{% endblock head %}
+
+{% block content %}
+    {% include "header.html" %}
+    <div class="main">
+        <h4>{{ topic.title }}</h4>
+        {% if theory_test and not theory_test_results %}
+            <a type="button" class="btn btn-success test-btn" href="{% url 'run-test' theory_test.id %}">
+                Тест по теории
+            </a>
+        {% endif %}
+        {% if theory_test_results %}
+            <button class="btn btn-success test-btn" disabled>
+                Тест по теории: {{ theory_test_results }}
+            </button>
+        {% endif %}
+        {% if methodology_test and not methodology_test_results %}
+            <a type="button" class="btn btn-warning test-btn" href="{% url 'run-test' methodology_test.id %}">
+                Тест по методологии
+            </a>
+        {% endif %}
+        {% if methodology_test_results %}
+            <button class="btn btn-warning test-btn" disabled>
+                Тест по методологии: {{ methodology_test_results }}
+            </button>
+        {% endif %}
+        {% if learning_problem_test and not learning_problem_test_results %}
+            <a type="button" class="btn btn-danger test-btn" href="{% url 'run-test' learning_problem_test.id %}">
+                Решение учебных проблем
+            </a>
+        {% endif %}
+        {% if learning_problem_test_results %}
+            <button class="btn btn-danger test-btn" disabled>
+                Решение учебных проблем: {{ learning_problem_test_results }}
+            </button>
+        {% endif %}
+    </div>
+{% endblock content %}

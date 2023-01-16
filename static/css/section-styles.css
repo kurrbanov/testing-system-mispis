@@ -1,0 +1,29 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+}
+
+.main {
+    height: 90%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.list-group {
+    margin-top: 15px;
+    min-width: 380px;
+}
+
+.test-btn {
+    width: 330px;
+    margin: 8px;
+    padding: 10px;
+}

@@ -1,0 +1,479 @@
+{% extends 'common.html' %}
+{% block head %}
+    <title>Карта</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/map-styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock head %}
+
+{% block content %}
+    {% include "header.html" %}
+    <style>
+        * {
+            text-align: center;
+        }
+    </style>
+        <div class="course">
+            <div class="course-title">
+                {% if common_total %}
+                    <canvas id="back-end"></canvas>
+                        <script>
+                          const ctx_main = document.getElementById('back-end');
+                          let tt_main = parseFloat(`{{ tt }}`.replace(',', '.')),
+                              mt_main = null,
+                              lp_main = null;
+                          {% if mt %}
+                              mt_main = parseFloat(`{{ mt }}`.replace(',', '.'));
+                          {% endif %}
+                          {% if lp %}
+                              lp_main = parseFloat(`{{ lp }}`.replace(',', '.'))
+                          {% endif %}
+                          new Chart(ctx_main, {
+                            type: 'bar',
+                            data: {
+                              labels: ['Теория', 'Методология', 'Уч. проблемы'],
+                              datasets: [{
+                                label: 'Курс бэкенд-разработки',
+                                {% if  lp %}
+                                  data: [tt_main, mt_main, lp_main],
+                                {% else %}
+                                  data: [tt_main, mt_main],
+                                {% endif %}
+                                borderWidth: 1,
+                                backgroundColor: ['rgba(255, 205, 86)']
+                              }]
+                            },
+                            options: {
+                              scales: {
+                                y: {
+                                  beginAtZero: true
+                                }
+                              }
+                            }
+                          });
+                        </script>
+                {% endif %}
+                <h5>Курс бэкенд-разработки</h5>
+                <p>P = {{ common_total }}</p>
+            </div>
+            <div class="sections-block">
+                <div class="sections">
+                    <div class="section-title">
+                        {% if comp_total %}
+                            <canvas id="Network"></canvas>
+                                <script>
+                                  const ctx11 = document.getElementById('Network');
+                                  let tt0 = parseFloat(`{{ network_tt }}`.replace(',', '.')),
+                                      mt0 = null,
+                                      lp0 = null;
+                                  {% if network_mt %}
+                                      mt0 = parseFloat(`{{ network_mt }}`.replace(',', '.'));
+                                  {% endif %}
+                                  {% if network_lp %}
+                                      lp0 = parseFloat(`{{ network_lp }}`.replace(',', '.'))
+                                  {% endif %}
+                                  new Chart(ctx11, {
+                                    type: 'bar',
+                                    data: {
+                                      labels: ['Теория', 'Методология', 'Уч. проблемы'],
+                                      datasets: [{
+                                        label: 'Компьютерные сети',
+                                        {% if network_lp %}
+                                          data: [tt0, mt0, lp0],
+                                        {% else %}
+                                          data: [tt0, mt0],
+                                        {% endif %}
+                                        borderWidth: 1,
+                                        backgroundColor: ['rgb(75, 192, 192)']
+                                      }]
+                                    },
+                                    options: {
+                                      scales: {
+                                        y: {
+                                          beginAtZero: true
+                                        }
+                                      }
+                                    }
+                                  });
+                                </script>
+                        {% endif %}
+                        <h5>Компьютерные сети</h5>
+                        <p>P = {{ comp_total }}</p>
+                    </div>
+                    <div class="topics">
+                        <div class="topic-data">
+                            <div class="topic-chart">
+                                {% if internet_tt %}
+                                <canvas id="Ethernet"></canvas>
+                                <script>
+                                  const ctx1 = document.getElementById('Ethernet');
+                                  let tt = parseFloat(`{{ internet_tt }}`.replace(',', '.')),
+                                      mt = null,
+                                      lp = null;
+                                  {% if internet_mt %}
+                                      mt = parseFloat(`{{ internet_mt }}`.replace(',', '.'));
+                                  {% endif %}
+                                  {% if internet_lp %}
+                                      lp = parseFloat(`{{ internet_lp }}`.replace(',', '.'))
+                                  {% endif %}
+                                  new Chart(ctx1, {
+                                    type: 'bar',
+                                    data: {
+                                      labels: ['Теория', 'Методология', 'Уч. проблемы'],
+                                      datasets: [{
+                                        label: 'Интернет',
+                                        {% if internet_lp %}
+                                          data: [tt, mt, lp],
+                                        {% else %}
+                                          data: [tt, mt],
+                                        {% endif %}
+                                        borderWidth: 1,
+                                        backgroundColor: ['rgb(75, 192, 192)']
+                                      }]
+                                    },
+                                    options: {
+                                      scales: {
+                                        y: {
+                                          beginAtZero: true
+                                        }
+                                      }
+                                    }
+                                  });
+                                </script>
+                                <p>P = {{ internet_total }}</p>
+                                {% else %}
+                                    <h5>Интернет</h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="topic-data">
+                            <div class="topic-chart">
+                                {% if protocols_tt %}
+                                <canvas id="Protocols"></canvas>
+                                <script>
+                                  const ctx2 = document.getElementById('Protocols');
+                                  let tt2 = parseFloat(`{{ protocols_tt }}`.replace(',', '.')),
+                                      mt2 = null,
+                                      lp2 = null;
+                                  {% if protocols_mt %}
+                                      mt2 = parseFloat(`{{ protocols_mt }}`.replace(',', '.'));
+                                  {% endif %}
+                                  {% if protocols_lp %}
+                                      lp2 = parseFloat(`{{ protocols_lp }}`.replace(',', '.'))
+                                  {% endif %}
+
+                                  new Chart(ctx2, {
+                                    type: 'bar',
+                                    data: {
+                                      labels: ['Теория', 'Методология', 'Уч. проблемы'],
+                                      datasets: [{
+                                        label: 'Протоколы',
+                                        {% if protocols_lp %}
+                                          data: [tt2, mt2, lp2],
+                                        {% else %}
+                                          data: [tt2, mt2],
+                                        {% endif %}
+                                        borderWidth: 1,
+                                        backgroundColor: ['rgb(255, 159, 64)', 'rgb(255, 159, 64)']
+                                      }]
+                                    },
+                                    options: {
+                                      scales: {
+                                        y: {
+                                          beginAtZero: true
+                                        }
+                                      }
+                                    }
+                                  });
+                                </script>
+                                <p>P = {{ protocols_total }}</p>
+                                {% else %}
+                                    <h5>Протоколы</h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sections">
+                    <div class="section-title">
+                        {% if db_total %}
+                            <canvas id="DB"></canvas>
+                                <script>
+                                  const ctx21 = document.getElementById('DB');
+                                  let tt00 = parseFloat(`{{ db_tt }}`.replace(',', '.')),
+                                      mt00 = null,
+                                      lp00 = null;
+                                  {% if db_mt %}
+                                      mt00 = parseFloat(`{{ db_mt }}`.replace(',', '.'));
+                                  {% endif %}
+                                  {% if db_lp %}
+                                      lp00 = parseFloat(`{{ db_lp }}`.replace(',', '.'))
+                                  {% endif %}
+                                  new Chart(ctx21, {
+                                    type: 'bar',
+                                    data: {
+                                      labels: ['Теория', 'Методология', 'Уч. проблемы'],
+                                      datasets: [{
+                                        label: 'Работа с БД',
+                                        {% if db_lp %}
+                                          data: [tt00, mt00, lp00],
+                                        {% else %}
+                                          data: [tt00, mt00],
+                                        {% endif %}
+                                        borderWidth: 1,
+                                        backgroundColor: ['rgb(75, 192, 192)']
+                                      }]
+                                    },
+                                    options: {
+                                      scales: {
+                                        y: {
+                                          beginAtZero: true
+                                        }
+                                      }
+                                    }
+                                  });
+                                </script>
+                        {% endif %}
+                        <h5>Работа с БД</h5>
+                        <p>P = {{ db_total }}</p>
+                    </div>
+                    <div class="topics">
+                        <div class="topic-data">
+                            <div class="topic-chart">
+                                {% if operators_tt %}
+                                <canvas id="Operators"></canvas>
+                                <script>
+                                  const ctx3 = document.getElementById('Operators');
+                                  let tt3 = parseFloat(`{{ operators_tt }}`.replace(',', '.')),
+                                      mt3 = null,
+                                      lp3 = null;
+                                  {% if protocols_mt %}
+                                      mt3 = parseFloat(`{{ operators_mt }}`.replace(',', '.'));
+                                  {% endif %}
+                                  {% if protocols_lp %}
+                                      lp3 = parseFloat(`{{ operators_lp }}`.replace(',', '.'))
+                                  {% endif %}
+
+
+                                  new Chart(ctx3, {
+                                    type: 'bar',
+                                    data: {
+                                      labels: ['Теория', 'Методология', 'Уч. проблемы'],
+                                      datasets: [{
+                                        label: 'Операторы',
+                                        {% if operators_lp %}
+                                          data: [tt3, mt3, lp3],
+                                        {% else %}
+                                          data: [tt3, mt3],
+                                        {% endif %}
+                                        borderWidth: 1,
+                                        backgroundColor: ['rgb(153, 102, 255)']
+                                      }]
+                                    },
+                                    options: {
+                                      scales: {
+                                        y: {
+                                          beginAtZero: true
+                                        }
+                                      }
+                                    }
+                                  });
+                                </script>
+                                <p>P = {{ operators_total }}</p>
+                                {% else %}
+                                    <h5>Операторы</h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="topic-data">
+                            <div class="topic-chart">
+                                {% if optimizations_tt %}
+                                <canvas id="Optimizations"></canvas>
+                                <script>
+                                  const ctx4 = document.getElementById('Optimizations');
+                                   let tt4 = parseFloat(`{{ optimizations_tt }}`.replace(',', '.')),
+                                       mt4 = null,
+                                       lp4 = null;
+                                  {% if protocols_mt %}
+                                      mt4 = parseFloat(`{{ optimizations_mt }}`.replace(',', '.'));
+                                  {% endif %}
+                                  {% if protocols_lp %}
+                                      lp4 = parseFloat(`{{ optimizations_lp }}`.replace(',', '.'))
+                                  {% endif %}
+
+                                  new Chart(ctx4, {
+                                    type: 'bar',
+                                    data: {
+                                      labels: ['Теория', 'Методология', 'Уч. проблемы'],
+                                      datasets: [{
+                                        label: 'Оптимизации',
+                                        {% if optimizations_lp %}
+                                          data: [tt4, mt4, lp4],
+                                        {% else %}
+                                          data: [tt4, mt4],
+                                        {% endif %}
+                                        borderWidth: 1,
+                                        backgroundColor: ['rgb(255, 99, 132)']
+                                      }]
+                                    },
+                                    options: {
+                                      scales: {
+                                        y: {
+                                          beginAtZero: true
+                                        }
+                                      }
+                                    }
+                                  });
+                                </script>
+                                <p>P = {{ optimizations_total }}</p>
+                                {% else %}
+                                    <h5>Оптимизации</h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--
+                <div class="sections">
+                    <div class="section-title">
+                        <h5>Python</h5>
+                    </div>
+                    <div class="topics">
+                        <div class="topic-data">
+                            <div class="topic-chart">
+                                {% if syntax_tt %}
+                                <canvas id="Syntax"></canvas>
+                                <script>
+                                  const ctx5 = document.getElementById('Syntax');
+                                   let tt5 = parseFloat(`{{ optimizations_tt }}`.replace(',', '.')),
+                                       mt5 = null,
+                                       lp5 = null;
+                                  {% if protocols_mt %}
+                                      mt5 = parseFloat(`{{ operators_mt }}`.replace(',', '.'));
+                                  {% endif %}
+                                  {% if protocols_lp %}
+                                      lp5 = parseFloat(`{{ operators_lp }}`.replace(',', '.'))
+                                  {% endif %}
+
+                                  new Chart(ctx5, {
+                                    type: 'bar',
+                                    data: {
+                                      labels: ['Теория', 'Методология', 'Уч. проблемы'],
+                                      datasets: [{
+                                        label: 'Синтаксис P = {{ syntax_total }}',
+                                        {% if optimizations_lp %}
+                                          data: [tt5, mt5, lp5],
+                                        {% else %}
+                                          data: [tt5, mt5],
+                                        {% endif %}
+                                        borderWidth: 1
+                                      }]
+                                    },
+                                    options: {
+                                      scales: {
+                                        y: {
+                                          beginAtZero: true
+                                        }
+                                      }
+                                    }
+                                  });
+                                </script>
+                                {% else %}
+                                    <h5>Синтаксис</h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="topic-data">
+                            <div class="topic-chart">
+                                {% if sockets_tt %}
+                                <canvas id="Sockets"></canvas>
+                                <script>
+                                  const ctx6 = document.getElementById('Sockets');
+                                  let tt6 = parseFloat(`{{ sockets_tt }}`.replace(',', '.')),
+                                      mt6 = null,
+                                      lp6 = null;
+                                  {% if protocols_mt %}
+                                      mt6 = parseFloat(`{{ sockets_mt }}`.replace(',', '.'));
+                                  {% endif %}
+                                  {% if protocols_lp %}
+                                      lp6 = parseFloat(`{{ sockets_lp }}`.replace(',', '.'))
+                                  {% endif %}
+
+                                  new Chart(ctx6, {
+                                    type: 'bar',
+                                    data: {
+                                      labels: ['Теория', 'Методология', 'Уч. проблемы'],
+                                      datasets: [{
+                                        label: 'Работа с сокетами P = {{ sockets_total }}',
+                                        {% if sockets_lp %}
+                                          data: [tt6, mt6, lp6],
+                                        {% else %}
+                                          data: [tt6, mt6],
+                                        {% endif %}
+                                        borderWidth: 1
+                                      }]
+                                    },
+                                    options: {
+                                      scales: {
+                                        y: {
+                                          beginAtZero: true
+                                        }
+                                      }
+                                    }
+                                  });
+                                </script>
+                                {% else %}
+                                    <h5>Работа с сокетами</h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="topic-data">
+                            <div class="topic-chart">
+                                {% if multi_tt %}
+                                <canvas id="Multithreading"></canvas>
+                                <script>
+                                  const ctx7 = document.getElementById('Multithreading');
+                                  let tt7 = parseFloat(`{{ sockets_tt }}`.replace(',', '.')),
+                                      mt7 = null,
+                                      lp7 = null;
+                                  {% if protocols_mt %}
+                                      mt7 = parseFloat(`{{ sockets_mt }}`.replace(',', '.'));
+                                  {% endif %}
+                                  {% if protocols_lp %}
+                                      lp7 = parseFloat(`{{ sockets_lp }}`.replace(',', '.'))
+                                  {% endif %}
+
+                                  new Chart(ctx7, {
+                                    type: 'bar',
+                                    data: {
+                                      labels: ['Теория', 'Методология', 'Уч. проблемы'],
+                                      datasets: [{
+                                        label: 'Многопоточность P = {{ multi_total }}',
+                                        {% if multi_lp %}
+                                          data: [tt7, mt7, lp7],
+                                        {% else %}
+                                          data: [tt7, mt7],
+                                        {% endif %}
+                                        borderWidth: 1
+                                      }]
+                                    },
+                                    options: {
+                                      scales: {
+                                        y: {
+                                          beginAtZero: true
+                                        }
+                                      }
+                                    }
+                                  });
+                                </script>
+                                {% else %}
+                                    <h5>Многопоточность</h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+{% endblock content %}

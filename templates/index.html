@@ -1,0 +1,27 @@
+{% extends "common.html" %}
+{% block head %}
+    <title>Курс по бэкенд разработке</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/index-styles.css' %}">
+{% endblock head %}
+
+{% block content %}
+    {% include "header.html" %}
+    <body>
+        <div class="main">
+            <div class="greetings">
+                <h3>Добро пожаловать на курс, {{ custom_user.name }}!</h3>
+            </div>
+            <div class="sections">
+                <h4>Выберите раздел:</h4>
+                <div class="list-group">
+                    {% for section in sections %}
+                        <a href="{% url 'section' section.id %}" class="list-group-item list-group-item-action">
+                            {{ section.title }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+{% endblock content %}
